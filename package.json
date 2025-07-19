@@ -1,0 +1,13 @@
+{
+  "name": "hi-landing-page",
+  "version": "1.0.0",
+  "description": "Simple landing page that says hi",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  },
+  "keywords": ["landing-page", "html"],
+  "author": "",
+  "license": "MIT"
+}
