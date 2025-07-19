@@ -19,6 +19,14 @@
             justify-content: center;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            flex-direction: column;
+        }
+
+        .dial-container {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
         }
 
         .dial {
@@ -58,20 +66,28 @@
     </style>
 </head>
 <body>
-    <div class="dial" onclick="nextNumber()">
-        <div class="number" id="currentNumber">0</div>
+    <div class="dial-container">
+        <div class="dial" onclick="nextNumber(0)">
+            <div class="number" id="currentNumber0">0</div>
+        </div>
+        <div class="dial" onclick="nextNumber(1)">
+            <div class="number" id="currentNumber1">0</div>
+        </div>
+        <div class="dial" onclick="nextNumber(2)">
+            <div class="number" id="currentNumber2">0</div>
+        </div>
     </div>
     
     <div class="instructions">
-        Click to change number (0-9)
+        Click any dial to change its number (0-9)
     </div>
 
     <script>
-        let number = 0;
+        let numbers = [0, 0, 0];
         
-        function nextNumber() {
-            number = (number + 1) % 10;
-            document.getElementById('currentNumber').textContent = number;
+        function nextNumber(dialIndex) {
+            numbers[dialIndex] = (numbers[dialIndex] + 1) % 10;
+            document.getElementById('currentNumber' + dialIndex).textContent = numbers[dialIndex];
         }
     </script>
 </body>
