@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "npx serve . -s"
+  },
   "keywords": ["landing-page", "html"],
   "author": "",
   "license": "MIT"
