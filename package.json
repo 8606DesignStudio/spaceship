@@ -4,9 +4,7 @@
   "description": "Simple landing page that says hi",
   "main": "index.html",
   "scripts": {
-    "dev": "npx serve .",
-    "start": "npx serve ."
-  },
+    "dev": "npx serve . -s"
   "keywords": ["landing-page", "html"],
   "author": "",
   "license": "MIT"
