@@ -23,30 +23,64 @@
         }
 
         .hi-button {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
             background: rgba(0, 0, 0, 0.8);
-            border: 2px solid rgba(0, 0, 0, 0.9);
-            border-radius: 50px;
-            padding: 20px 40px;
-            font-size: 4rem;
-            font-weight: 300;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border: 4px solid rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             animation: fadeIn 1s ease-out;
+            user-select: none;
         }
 
         .hi-button:hover {
-            background: rgba(0, 0, 0, 0.9);
-            border-color: rgba(0, 0, 0, 1);
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .hi-button:active {
-            transform: translateY(0);
+        .dial-number {
+            font-size: 3rem;
+            font-weight: 300;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .dial-markers {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .dial-marker {
+            position: absolute;
+            width: 2px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            transform-origin: center bottom;
+        }
+
+        .dial-marker:nth-child(1) { transform: rotate(0deg) translateY(-85px); }
+        .dial-marker:nth-child(2) { transform: rotate(36deg) translateY(-85px); }
+        .dial-marker:nth-child(3) { transform: rotate(72deg) translateY(-85px); }
+        .dial-marker:nth-child(4) { transform: rotate(108deg) translateY(-85px); }
+        .dial-marker:nth-child(5) { transform: rotate(144deg) translateY(-85px); }
+        .dial-marker:nth-child(6) { transform: rotate(180deg) translateY(-85px); }
+        .dial-marker:nth-child(7) { transform: rotate(216deg) translateY(-85px); }
+        .dial-marker:nth-child(8) { transform: rotate(252deg) translateY(-85px); }
+        .dial-marker:nth-child(9) { transform: rotate(288deg) translateY(-85px); }
+        .dial-marker:nth-child(10) { transform: rotate(324deg) translateY(-85px); }
+
+        .dial-rotating {
+            transition: transform 0.3s ease;
         }
 
         @keyframes fadeIn {
@@ -62,13 +96,168 @@
 
         @media (max-width: 768px) {
             .hi-button {
-                font-size: 3rem;
-                padding: 15px 30px;
+                width: 150px;
+                height: 150px;
+            }
+            
+            .dial-number {
+                font-size: 2rem;
+            }
+            
+            .dial-marker:nth-child(1) { transform: rotate(0deg) translateY(-65px); }
+            .dial-marker:nth-child(2) { transform: rotate(36deg) translateY(-65px); }
+            .dial-marker:nth-child(3) { transform: rotate(72deg) translateY(-65px); }
+            .dial-marker:nth-child(4) { transform: rotate(108deg) translateY(-65px); }
+            .dial-marker:nth-child(5) { transform: rotate(144deg) translateY(-65px); }
+            .dial-marker:nth-child(6) { transform: rotate(180deg) translateY(-65px); }
+            .dial-marker:nth-child(7) { transform: rotate(216deg) translateY(-65px); }
+            .dial-marker:nth-child(8) { transform: rotate(252deg) translateY(-65px); }
+            .dial-marker:nth-child(9) { transform: rotate(288deg) translateY(-65px); }
+            .dial-marker:nth-child(10) { transform: rotate(324deg) translateY(-65px); }
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 300px;
+        }
+
+        @media (max-width: 768px) {
+            .instructions {
+                font-size: 0.8rem;
+                max-width: 250px;
             }
         }
     </style>
 </head>
 <body>
-    <a href="https://dashboard.transistor.fm/shows/heart-emoji-3" target="_blank" class="hi-button">test 9:25</a>
+    <div class="hi-button" id="dial">
+        <div class="dial-markers">
+            <div class="dial-marker"></div>
+            <div class="dial-marker"></div>
+            <div class="dial-marker"></div>
+            <div class="dial-marker"></div>
+            <div class="dial-marker"></div>
+            <div class="dial-marker"></div>
+            <div class="dial-marker"></div>
+            <div class="dial-marker"></div>
+            <div class="dial-marker"></div>
+            <div class="dial-marker"></div>
+        </div>
+        <div class="dial-number" id="dialNumber">0</div>
+    </div>
+    
+    <div class="instructions">
+        Click and drag to rotate the dial<br>
+        Select numbers 0-9
+    </div>
+
+    <script>
+        const dial = document.getElementById('dial');
+        const dialNumber = document.getElementById('dialNumber');
+        let currentNumber = 0;
+        let isDragging = false;
+        let startAngle = 0;
+        let currentRotation = 0;
+
+        function getAngle(event, element) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const x = event.clientX - centerX;
+            const y = event.clientY - centerY;
+            return Math.atan2(y, x) * (180 / Math.PI);
+        }
+
+        function updateNumber(rotation) {
+            // Normalize rotation to 0-360 degrees
+            const normalizedRotation = ((rotation % 360) + 360) % 360;
+            // Each number is 36 degrees apart (360/10)
+            const number = Math.round(normalizedRotation / 36) % 10;
+            currentNumber = number;
+            dialNumber.textContent = number;
+        }
+
+        dial.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startAngle = getAngle(e, dial);
+            dial.classList.remove('dial-rotating');
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const currentAngle = getAngle(e, dial);
+            const angleDiff = currentAngle - startAngle;
+            currentRotation += angleDiff;
+            startAngle = currentAngle;
+            
+            dial.style.transform = `translateY(-2px) rotate(${currentRotation}deg)`;
+            updateNumber(currentRotation);
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            // Snap to nearest number
+            const snapRotation = Math.round(currentRotation / 36) * 36;
+            currentRotation = snapRotation;
+            
+            dial.classList.add('dial-rotating');
+            dial.style.transform = `translateY(-2px) rotate(${snapRotation}deg)`;
+            updateNumber(snapRotation);
+        });
+
+        // Touch events for mobile
+        dial.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startAngle = getAngle(e.touches[0], dial);
+            dial.classList.remove('dial-rotating');
+            e.preventDefault();
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            
+            const currentAngle = getAngle(e.touches[0], dial);
+            const angleDiff = currentAngle - startAngle;
+            currentRotation += angleDiff;
+            startAngle = currentAngle;
+            
+            dial.style.transform = `translateY(-2px) rotate(${currentRotation}deg)`;
+            updateNumber(currentRotation);
+            e.preventDefault();
+        });
+
+        document.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            // Snap to nearest number
+            const snapRotation = Math.round(currentRotation / 36) * 36;
+            currentRotation = snapRotation;
+            
+            dial.classList.add('dial-rotating');
+            dial.style.transform = `translateY(-2px) rotate(${snapRotation}deg)`;
+            updateNumber(snapRotation);
+        });
+
+        // Click to increment (alternative interaction)
+        dial.addEventListener('click', (e) => {
+            if (!isDragging) {
+                currentNumber = (currentNumber + 1) % 10;
+                currentRotation = currentNumber * 36;
+                dial.style.transform = `translateY(-2px) rotate(${currentRotation}deg)`;
+                dialNumber.textContent = currentNumber;
+            }
+        });
+    </script>
 </body>
 </html>
