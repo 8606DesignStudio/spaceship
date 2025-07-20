@@ -22,6 +22,30 @@
             flex-direction: column;
         }
 
+        .episode-display {
+            margin-bottom: 30px;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .episode-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #ffd700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            line-height: 1.4;
+        }
+
+        .episode-not-found {
+            font-size: 1rem;
+            color: #888;
+            font-style: italic;
+        }
+
         .dial-container {
             display: flex;
             gap: 10px;
@@ -60,6 +84,10 @@
     </style>
 </head>
 <body>
+    <div class="episode-display">
+        <div class="episode-title" id="episodeDisplay">Episode 000: Welcome to the Show</div>
+    </div>
+    
     <div class="dial-container">
         <div class="dial" onclick="nextNumber(0)">
             <div class="number" id="currentNumber0">0</div>
@@ -106,10 +134,29 @@
             numbers[dialIndex] = (numbers[dialIndex] + 1) % 10;
             document.getElementById('currentNumber' + dialIndex).textContent = numbers[dialIndex];
             
+            // Update the episode display
+            updateEpisodeDisplay();
+            
             // Log both the number and the episode
             console.log('Episode Number:', getCombinedNumber());
             console.log('Episode Title:', getCurrentEpisode());
         }
+        
+        function updateEpisodeDisplay() {
+            const episodeDisplay = document.getElementById('episodeDisplay');
+            const currentEpisode = getCurrentEpisode();
+            
+            if (currentEpisode === "Episode not found") {
+                episodeDisplay.textContent = "Episode not available";
+                episodeDisplay.className = "episode-not-found";
+            } else {
+                episodeDisplay.textContent = currentEpisode;
+                episodeDisplay.className = "episode-title";
+            }
+        }
+        
+        // Initialize the display on page load
+        updateEpisodeDisplay();
     </script>
 </body>
 </html>
