@@ -148,7 +148,6 @@ let numbers = [0, 0, 0];
 document.getElementById('dials').innerHTML = numbers.map((n, i) => 
     `<div class="dial" 
           onclick="spin(${i})" 
-         oncontextmenu="spinDown(${i}); return false;"
           ontouchstart="handleTouchStart(event, ${i})" 
           ontouchend="handleTouchEnd(event)">${n}</div>`
 ).join('');
@@ -164,34 +163,6 @@ function spinDown(i) {
     numbers[i] = (numbers[i] - 1 + 10) % 10; // Decrement and wrap at 0
     update();
 }
-
-// Add keyboard controls for desktop users
-document.addEventListener('keydown', function(e) {
-    // Use number keys 1, 2, 3 to control each dial
-    if (e.key === '1') {
-        spin(0); // Control first dial (hundreds)
-    } else if (e.key === '2') {
-        spin(1); // Control second dial (tens)
-    } else if (e.key === '3') {
-        spin(2); // Control third dial (ones)
-    }
-    // Use Shift + number keys to spin down
-    else if (e.key === '!' && e.shiftKey) { // Shift + 1
-        spinDown(0);
-    } else if (e.key === '@' && e.shiftKey) { // Shift + 2
-        spinDown(1);
-    } else if (e.key === '#' && e.shiftKey) { // Shift + 3
-        spinDown(2);
-    }
-    // Arrow keys for the currently focused dial
-    else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        spin(1); // Default to middle dial
-    } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        spinDown(1); // Default to middle dial
-    }
-});
 
 // Touch gesture handling variables
 let touchStartY = 0;
