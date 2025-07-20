@@ -4,8 +4,8 @@
   "description": "A simple dial interface for browsing podcast episodes",
   "main": "index.html",
   "scripts": {
-    "dev": "npx http-server -p 3000",
-    "start": "npx http-server -p 3000"
+    "dev": "npx http-server . -p 3000 -o",
+    "start": "npx http-server . -p 3000 -o"
   },
   "keywords": ["podcast", "dial", "episodes"],
   "author": "",
