@@ -1,0 +1,13 @@
+{
+  "name": "podcast-dial",
+  "version": "1.0.0",
+  "description": "A simple dial interface for browsing podcast episodes",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 3000",
+    "start": "python -m http.server 3000"
+  },
+  "keywords": ["podcast", "dial", "episodes"],
+  "author": "",
+  "license": "MIT"
+}
