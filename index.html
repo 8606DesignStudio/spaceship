@@ -1,57 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic HTML document setup -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Dial</title>
     <style>
+        /* Reset default browser styles and set up box-sizing */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Main body styling - creates the dark blue background and centers everything */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #000050;
+            background: #000050; /* Dark blue background */
             color: white;
-            flex-direction: column;
+            flex-direction: column; /* Stack items vertically */
             gap: 30px;
         }
+        
+        /* Episode title display area */
         .episode { font-size: 1.2rem; color: #ffd700; text-align: center; min-height: 30px; }
+        
+        /* Episode link styling */
         .episode a {
-            color: #ffd700;
+            color: #ffd700; /* Gold color for links */
             text-decoration: none;
             transition: color 0.2s;
         }
+        
+        /* Episode link hover effect */
         .episode a:hover {
-            color: #ffffff;
+            color: #ffffff; /* White on hover */
             text-decoration: underline;
         }
+        
+        /* Container for the three dials */
         .dials { display: flex; gap: 10px; }
+        
+        /* Individual dial styling */
         .dial {
-            width: 50px;
+            width: 50px; /* Fixed width for each dial */
             height: 100px;
             border-radius: 5px;
-            background: linear-gradient(135deg, #ffd700, #ffb347);
-            border: 4px solid #b8860b;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, #ffd700, #ffb347); /* Gold gradient */
+            border: 4px solid #b8860b; /* Darker gold border */
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); /* Glowing effect */
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: transform 0.2s;
+            cursor: pointer; /* Show it's clickable */
+            transition: transform 0.2s; /* Smooth scaling animation */
             font-size: 2rem;
             font-weight: bold;
-            color: #8b4513;
+            color: #8b4513; /* Dark brown text */
         }
+        
+        /* Dial hover effect - slightly larger */
         .dial:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
+    <!-- Episode display area - shows current episode title/link -->
     <div class="episode" id="episode">Episode 000: Welcome to the Show</div>
+    
+    <!-- Container for the three number dials -->
     <div class="dials" id="dials"></div>
 
     <script>
+        // Array containing all episode titles and links
+        // Index 0 = Episode 000, Index 1 = Episode 001, etc.
         const episodes = [
             '<a href="https://share.transistor.fm/s/b394c866">Colors, Berg Lake & Creativity | <3 #1 CHATGPT</a>',
             '<a href="https://share.transistor.fm/s/c9a1ec46">Singing Sand, Sound Design & Data Reliability | <3 #2 CHATGPT</a>',
@@ -138,7 +159,7 @@
             '<a href="https://share.transistor.fm/s/cc25d5d8">RSS is Confusing | <3 #96 GEMINI</a>',
             '<a href="https://share.transistor.fm/s/e4972392">Fun RenFaire Outfit Brainstorm | <3 #97 GEMINI</a>',
             '<a href="https://share.transistor.fm/s/d4708a68">Sound Treating a Small Podcasting Space | <3 #98 GEMINI</a>',
-            "", // Episode 99 not in export
+            "", // Episode 99 not in export data
             '<a href="https://share.transistor.fm/s/09c970f6">About Time We Got to Know Grok | <3 #100 GROK</a>',
             '<a href="https://share.transistor.fm/s/ebc7681a">Scopolamine Clay & Other Sinister Poisoning Methods | <3 #101 GEMINI</a>',
             '<a href="https://share.transistor.fm/s/783eb786">We May Have Gone Too Deep on What Makes Up a GPU 🤯 | <3 #102 GEMINI</a>',
@@ -164,43 +185,50 @@
             '<a href="https://share.transistor.fm/s/7f9683d2">Building an Unsettling Opening Scene | <3 #122 CHATGPT</a>'
         ];
         
+        // Current state of the three dials [hundreds, tens, ones]
+        // Example: [1, 4, 2] = Episode 142
         let numbers = [0, 0, 0];
         
-        // Create dials dynamically
+        // Create the three dials dynamically and insert them into the HTML
         document.getElementById('dials').innerHTML = numbers.map((n, i) => 
             `<div class="dial" 
-                  onclick="spin(${i})"
-                  ontouchstart="handleTouchStart(event, ${i})"
+                  onclick="spin(${i})" 
+                  ontouchstart="handleTouchStart(event, ${i})" 
                   ontouchend="handleTouchEnd(event)">${n}</div>`
         ).join('');
         
+        // Function to increase a dial's number (0-9, wraps around)
         function spin(i) {
-            numbers[i] = (numbers[i] + 1) % 10;
+            numbers[i] = (numbers[i] + 1) % 10; // Increment and wrap at 10
             update();
         }
         
+        // Function to decrease a dial's number (0-9, wraps around)
         function spinDown(i) {
-            numbers[i] = (numbers[i] - 1 + 10) % 10;
+            numbers[i] = (numbers[i] - 1 + 10) % 10; // Decrement and wrap at 0
             update();
         }
         
-        // Touch gesture handling
+        // Touch gesture handling variables
         let touchStartY = 0;
-        let currentDial = -1;
+        let currentDial = -1; // Which dial is being touched
         
+        // Handle start of touch gesture
         function handleTouchStart(e, dialIndex) {
-            touchStartY = e.touches[0].clientY;
+            touchStartY = e.touches[0].clientY; // Record starting Y position
             currentDial = dialIndex;
-            e.preventDefault();
+            e.preventDefault(); // Prevent default touch behavior
         }
         
+        // Handle end of touch gesture - determine swipe direction
         function handleTouchEnd(e) {
-            if (currentDial === -1) return;
+            if (currentDial === -1) return; // No dial being touched
             
-            const touchEndY = e.changedTouches[0].clientY;
-            const deltaY = touchStartY - touchEndY;
+            const touchEndY = e.changedTouches[0].clientY; // End Y position
+            const deltaY = touchStartY - touchEndY; // Calculate swipe distance
             const threshold = 30; // Minimum distance for a flick
             
+            // Determine swipe direction and update dial accordingly
             if (Math.abs(deltaY) > threshold) {
                 if (deltaY > 0) {
                     // Flicked up - increase number
@@ -214,20 +242,27 @@
                 spin(currentDial);
             }
             
-            currentDial = -1;
+            currentDial = -1; // Reset touch state
             e.preventDefault();
         }
         
+        // Update the display when dials change
         function update() {
+            // Update the visual display of each dial
             const dialElements = document.querySelectorAll('.dial');
             dialElements.forEach((dial, i) => {
                 dial.textContent = numbers[i];
             });
             
+            // Calculate episode number from the three dials
+            // hundreds*100 + tens*10 + ones = episode number
             const episodeNum = numbers[0] * 100 + numbers[1] * 10 + numbers[2];
+            
+            // Display the episode title/link or "not available" message
             document.getElementById('episode').innerHTML = episodes[episodeNum] || "Episode not available";
         }
         
+        // Initialize the display
         update();
     </script>
 </body>
