@@ -2,7 +2,7 @@
 // Array containing all episode titles and links
 // Index corresponds to episode number (episodes[142] = Episode 142)
 const episodes = [
-    "Episode 000: Welcome to the Show",
+    "start scrolling <3",
     '<a href="https://share.transistor.fm/s/b394c866">Colors, Berg Lake & Creativity | <3 #1 CHATGPT</a>',
     '<a href="https://share.transistor.fm/s/c9a1ec46">Singing Sand, Sound Design & Data Reliability | <3 #2 CHATGPT</a>',
     '<a href="https://share.transistor.fm/s/0df36c93">Fear of AI and the Great Emu War | <3 #3 CHATGPT</a>',
