@@ -56,7 +56,10 @@
         
         // Create dials dynamically
         document.getElementById('dials').innerHTML = numbers.map((n, i) => 
-            `<div class="dial" onclick="spin(${i})">${n}</div>`
+            `<div class="dial" 
+                  onclick="spin(${i})"
+                  ontouchstart="handleTouchStart(event, ${i})"
+                  ontouchend="handleTouchEnd(event)">${n}</div>`
         ).join('');
         
         function spin(i) {
@@ -105,10 +108,9 @@
         
         function update() {
             const dialElements = document.querySelectorAll('.dial');
-                `<div class="dial" 
-                      onclick="spin(${i})"
-                      ontouchstart="handleTouchStart(event, ${i})"
-                      ontouchend="handleTouchEnd(event)">${n}</div>`
+            dialElements.forEach((dial, i) => {
+                dial.textContent = numbers[i];
+            });
             
             const episodeNum = numbers[0] * 100 + numbers[1] * 10 + numbers[2];
             document.getElementById('episode').textContent = episodes[episodeNum] || "Episode not available";
