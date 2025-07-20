@@ -54,11 +54,11 @@ body {
 /* Container for the three dials */
 .dials {
     position: absolute;
-    top: 42%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    gap: 10px;
+    gap: 5px;
 }
 
 /* Individual dial styling */
