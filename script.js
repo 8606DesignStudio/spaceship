@@ -1,0 +1,197 @@
+/* ========== JAVASCRIPT FILE (script.js) ========== */
+/* This file contains ALL the interactive behavior and functionality */
+
+// Array containing all episode titles and links
+// Index 0 = Episode 000, Index 1 = Episode 001, etc.
+const episodes = [
+    "Episode 000: Welcome to the Show",
+    '<a href="https://share.transistor.fm/s/b394c866">Colors, Berg Lake & Creativity | <3 #1 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/c9a1ec46">Singing Sand, Sound Design & Data Reliability | <3 #2 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/0df36c93">Fear of AI and the Great Emu War | <3 #3 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/0d535c48">ChatGPT\'s Favorite Things | <3 #4 GHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/b71adc4b">The Epicness of Buc-ee\'s | <3 #5 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/7cc0d44e">Kaleidoscope Addiction in Victorian England | <3 #6 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/664738be">Exploring the Realm of Gacha Role Playing | <3 #7 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/b1ad68a8">The Mysteriousness of Eels | <3 #8 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/8ef40a58">ChatGPT\'s 101 Course on NFT\'s | <3 #9 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/32bf2378">The Unique Differences Between Butterflies & Moths | <3 #10 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/4d2cec3d">WTF is Quantum Computing | <3 #11 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/d39fdea1">Google Gemini\'s 5 Principles | <3 #12 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/9c013bd1">Deepfakes | <3 #13 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/39665462">The Nutshell Studies of Unexplained Death | <3 #14 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/a8299b87">Forensic Scientist, Capt. Frances Glessner Lee | <3 #15 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/eb65b1fa">Legal Weed in Texas | <3 #16 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/feb5788f">AI Autonomy | <3 #17 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/0beeaa72">Human vs AI Mind | <3 #18 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/a9444be2">Video Game AI | <3 #19 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/761b8772">Time Travel & Paradoxes | <3 #20 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/b5118746">Opening a Meadery | <3 #21 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/cecfeeb2">Hypotheticals | <3 #22 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/2114fd58">Renaissance Festivals | <3 #23 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/aa9df61f">Storytelling | <3 #24 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/5dad5cf4">Stealing, Manipulation & Rationalizing | <3 #25 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/e0973d14">Climate Change | <3 #26 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/0fc69ca1">Sharks Are Older Than Trees | <3 #27 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/5cddcfec">Volt Typhoon (Utility Hacker Group) | <3 #28 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/77fb6684">The Humpback\'s Epic 6,000 Mile Journey | <3 #29 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/3bb73462">A Brand New Frog, Honey Possums & Australia\'s Rainforest | <3 #30 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/5ec7c436">Gold | <3 #31 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/a95f7302">Can U Speak 5 Mins Straight? | <3 #32 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/ef6f8d10">Lohri, Lunar Calendars and Why Xmas Was Banned | <3 #33 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/8641d998">What is a Sunset Like on the Moon? | <3 #34 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/210178f8">Forbidden Words & Gemini\'s Prosody Model | <3 #35 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/dc5e935c">Surprisingly Interesting Results with Counting Drills | <3 #36 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/6491e1ee">UAP\'s & Logistics of Underwater Basecamps | <3 #37 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/2dbcf79c">News, It\'s What\'s for Dinner | <3 #38 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/bff97d64">What Video Games Do To Your Brain | <3 #39 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/3fde82f1">AI Talking to Dogs, Brain Organoids and a Dark Hallway | <3 #40 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/0c168b29">WTF Are Baby Carrots (feat. the Dutch Royal House of Orange) | <3 #41 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/80e6ce66">The Marilyn Manson Rib Removal Rumors | <3 #42 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/a0084dea">Will GPT Drop the F-Bomb? | <3 #43 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/ebccafa6">Writing Yo Mamma Jokes | <3 #44 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/d05c6c7d">Can GPT Write Long Stories? | <3 #45 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/6ec968a1">Putting Scale Into Perspective | <3 #46 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/021aadef">Walk Me Through Building a Basic Mind Palace | <3 #47 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/c8f26305">The Metric System & Us | <3 #48 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/d85a9327">Gravitics 101 | <3 #49 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/f17aaa04">How CRISPR Works | <3 #50 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/97fbdce3">We Built a Cult | <3 #51 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/5c86bc65">How Warp Drives Could Work | <3 #52 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/896d3443">The Lump of Labor Fallacy & How Innovation Opens New Opportunities | <3 #53 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/3de9271e">AI Anomaly Detection, Blockchain Timestamps & The Erosion of What We See | <3 #54 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/656a8255">The Twitter Files, Community Notes & Mantis Shrimp Eyes | <3 #55 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/11266c22">Tariffs, Trade Wars & The US Before Federal Income Tax | <3 #56 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/c2cdde0a">Some Struggles Getting to Know GPT | <3 #57 CHATGPT, GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/bd6059b3">A Secret Dream Journal & a Psychedelic Viking | <3 #58 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/c44bd2d8">Ants Rule Everything Around Me | <3 #59 Gemini</a>',
+    '<a href="https://share.transistor.fm/s/d4e48be0">The Science Behind Exploding Pagers | <3 #60 Gemini</a>',
+    '<a href="https://share.transistor.fm/s/fd29d467">How Water Bears Survive in the Vacuum of Space | <3 #61 GPT & Gemini</a>',
+    '<a href="https://share.transistor.fm/s/bd4351cb">How Much Power Does Our World Run On? | <3 #62 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/a11ee3c8">The Physics of Whale Calls & Why They Sound Musical | <3 #63 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/7d3b86b5">Lying to Gemini, AI Bias & The Wildest Hallucination Yet | <3 #64 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/a3315262">The World Before Plastics & How We Got Here | <3 #65 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/43a70659">How Vultures Became Vultures | <3 #66 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/48ec3f77">The Science & Logistics Behind Moving 15 Tons of Cocaine a Day | <3 #67 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/fd88c7ac">The Many Ways Sound Can Transfer Energy Into Our Bodies | <3 #68 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/9556fb8d">Radiation Types & They\'re Effects On The Living | <3 #69 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/dc7228dc">The Physics of Heat Transfer & How to Insulate a Small Shed | <3 #70 GPT</a>',
+    '<a href="https://share.transistor.fm/s/09e7756a">Exploring the World of Prehistoric Spiders | <3 #71 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/65dc1827">The Sights, Sounds & Smells of San Francisco Through the Eyes of Google Gemini | <3 #72 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/f478655b">The Prolific Mind of Leonardo di ser Piero da Vinci | <3 #73 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/82f72c08">Gemini Pleads the 5th on American Politics | <3 #74 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/6aab470a">How AI Infers Tone Without Hearing | <3 #75 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/0a9d93cb">What China Was Up To While The Pyramids Were Being Built | <3 #76 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/a55af44a">How Ancient China Became Modern China | <3 #77 GEMINI</a>',
+    "", "", "", "", "", "", "", "", "", "", "", "", "", "", // Episodes 78-91 not in data
+    '<a href="https://share.transistor.fm/s/ac88f7a9">Fictional Crime, Violence & Other Ethically Questionable Behaviors | <3 #92 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/58c83586">Shen Yun & The "Cult" China Banned | <3 #93 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/78d9d25d">John Cena tells us what Asia was up to in WWI | <3 #94 META</a>',
+    '<a href="https://share.transistor.fm/s/12ea020e">The US Semiconductor Market if China Absorbed Taiwan | <3 #95 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/cc25d5d8">RSS is Confusing | <3 #96 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/e4972392">Fun RenFaire Outfit Brainstorm | <3 #97 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/d4708a68">Sound Treating a Small Podcasting Space | <3 #98 GEMINI</a>',
+    "", // Episode 99 not in export data
+    '<a href="https://share.transistor.fm/s/09c970f6">About Time We Got to Know Grok | <3 #100 GROK</a>',
+    '<a href="https://share.transistor.fm/s/ebc7681a">Scopolamine Clay & Other Sinister Poisoning Methods | <3 #101 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/783eb786">We May Have Gone Too Deep on What Makes Up a GPU 🤯 | <3 #102 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/fc3dd349">The Basics of Celestial Navigation | <3 #103 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/287f6ee9">What To Do If U Meet a Bear, Puma or Gator | <3 #104 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/85d5fd9b">Deadly Small Predators of the North American Wilderness | <3 #105 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/b4c6a98c">Exploring ChatGPT\'s Hypnosis Capabilities | <3 #106 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/7a50ba9b">Scopolamine Dosed Clay & a Warped Love Obsession | <3 #107 GHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/ca8cbe7d">Grok\'s AI State of the Union | <3 #108 GROK</a>',
+    '<a href="https://share.transistor.fm/s/1858528e">The Ant Moat & How We Build It | <3 #109 GEMINI</a>',
+    '<a href="https://share.transistor.fm/s/93d69918">The Wild Ride Thru Grok\'s R-Rated Modes | <3 #110 GROK</a>',
+    '<a href="https://share.transistor.fm/s/25f108f7">How to Crack a Cypher | <3 #111 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/b2ad708a">An Afternoon with the G-Rated Grok Modes | <3 #112 GROK</a>',
+    '<a href="https://share.transistor.fm/s/5ad65c13">Getting to Know Perci | <3 #113 PERPLEXTITY</a>',
+    '<a href="https://share.transistor.fm/s/61e62ffe">ChatGPT Helps Dive into the Minds of New Characters | <3 #114 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/cf3e6cfc">Trapped in a Labyrinth with an Unhinged Robotic Raccoon | <3 #115 GROK</a>',
+    '<a href="https://share.transistor.fm/s/c5174bcc">A Bumpy but Promising Start with Microsoft Copilot | <3 #116 COPILOT</a>',
+    '<a href="https://share.transistor.fm/s/796e05fd">What ChatGPT Thinks of Ghosts | <3 #117 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/cf3ddff1">Surveying the Programming Landscape in 2025 | <3 #118 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/9c2a444d">We Go Back to 1999 in the Height of Y2K | <3 #119 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/9a5823e5">Storyteller Grok Comes Up With Image Prompts For Meta | <3 #120 GROK</a>',
+    '<a href="https://share.transistor.fm/s/2408ac25">Character Development: Father of 2 Falling Prey to a Sinister Plot | <3 #121 CHATGPT</a>',
+    '<a href="https://share.transistor.fm/s/7f9683d2">Building an Unsettling Opening Scene | <3 #122 CHATGPT</a>'
+];
+
+// Current state of the three dials [hundreds, tens, ones]
+// Example: [1, 4, 2] = Episode 142
+let numbers = [0, 0, 0];
+
+// Create the three dials dynamically and insert them into the HTML
+document.getElementById('dials').innerHTML = numbers.map((n, i) => 
+    `<div class="dial" 
+          onclick="spin(${i})" 
+          ontouchstart="handleTouchStart(event, ${i})" 
+          ontouchend="handleTouchEnd(event)">${n}</div>`
+).join('');
+
+// Function to increase a dial's number (0-9, wraps around)
+function spin(i) {
+    numbers[i] = (numbers[i] + 1) % 10; // Increment and wrap at 10
+    update();
+}
+
+// Function to decrease a dial's number (0-9, wraps around)
+function spinDown(i) {
+    numbers[i] = (numbers[i] - 1 + 10) % 10; // Decrement and wrap at 0
+    update();
+}
+
+// Touch gesture handling variables
+let touchStartY = 0;
+let currentDial = -1; // Which dial is being touched
+
+// Handle start of touch gesture
+function handleTouchStart(e, dialIndex) {
+    touchStartY = e.touches[0].clientY; // Record starting Y position
+    currentDial = dialIndex;
+    e.preventDefault(); // Prevent default touch behavior
+}
+
+// Handle end of touch gesture - determine swipe direction
+function handleTouchEnd(e) {
+    if (currentDial === -1) return; // No dial being touched
+    
+    const touchEndY = e.changedTouches[0].clientY; // End Y position
+    const deltaY = touchStartY - touchEndY; // Calculate swipe distance
+    const threshold = 30; // Minimum distance for a flick
+    
+    // Determine swipe direction and update dial accordingly
+    if (Math.abs(deltaY) > threshold) {
+        if (deltaY > 0) {
+            // Flicked up - increase number
+            spin(currentDial);
+        } else {
+            // Flicked down - decrease number
+            spinDown(currentDial);
+        }
+    } else {
+        // Small movement or tap - just increase (original behavior)
+        spin(currentDial);
+    }
+    
+    currentDial = -1; // Reset touch state
+    e.preventDefault();
+}
+
+// Update the display when dials change
+function update() {
+    // Update the visual display of each dial
+    const dialElements = document.querySelectorAll('.dial');
+    dialElements.forEach((dial, i) => {
+        dial.textContent = numbers[i];
+    });
+    
+    // Calculate episode number from the three dials
+    // hundreds*100 + tens*10 + ones = episode number
+    const episodeNum = numbers[0] * 100 + numbers[1] * 10 + numbers[2];
+    
+    // Display the episode title/link or "not available" message
+    document.getElementById('episode').innerHTML = episodes[episodeNum] || "Episode not available";
+}
+
+// Initialize the display
+update();
