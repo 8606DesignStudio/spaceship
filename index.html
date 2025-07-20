@@ -18,6 +18,15 @@
             gap: 30px;
         }
         .episode { font-size: 1.2rem; color: #ffd700; text-align: center; min-height: 30px; }
+        .episode a {
+            color: #ffd700;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .episode a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
         .dials { display: flex; gap: 10px; }
         .dial {
             width: 50px;
@@ -44,21 +53,21 @@
 
     <script>
         const episodes = [
-            "<3 Recording Log",
-            "Colors, Berg Lake & Creativity | <3 #1 CHATGPT",
-            "Singing Sand, Sound Design & Data Reliability | <3 #2 CHATGPT",
-            "Fear of AI and the Great Emu War | ep3 CHATGPT",
-            "Tokyo & Grilled Cheese 🧀 | <3 #4 GHATGPT",
-            "The Epicness of Buc-ee's | <3 #5 CHATGPT",
-            "Kaleidoscope Addiction in Victorian England | <3 #6 CHATGPT",
-            "Exploring the Realm of Gacha Role Playing | <3 #7 CHATGPT",
-            "The Mysteriousness of Eels | <3 #8 CHATGPT",
-            "ChatGPT's 101 Course on NFT's | <3 #9 CHATGPT",
-            "The Unique Differences Between Butterflies & Moths | <3 #10 GEMINI",
-            "WTF is Quantum Computing | <3 #11 GEMINI",
-            "Google Gemini's 5 Principles | <3 #12 GEMINI",
-            "Deepfakes | <3 #13 GEMINI",
-            "The Nutshell Studies of Unexplained Death | <3 #14 GEMINI"
+            "Episode 000: Welcome to the Show",
+            '<a href="#episode1">Colors, Berg Lake & Creativity | <3 #1 CHATGPT</a>',
+            '<a href="#episode2">Singing Sand, Sound Design & Data Reliability | <3 #2 CHATGPT</a>',
+            '<a href="#episode3">Fear of AI and the Great Emu War | ep3 CHATGPT</a>',
+            '<a href="#episode4">Tokyo & Grilled Cheese 🧀 | <3 #4 GHATGPT</a>',
+            '<a href="#episode5">The Epicness of Buc-ee\'s | <3 #5 CHATGPT</a>',
+            '<a href="#episode6">Kaleidoscope Addiction in Victorian England | <3 #6 CHATGPT</a>',
+            '<a href="#episode7">Exploring the Realm of Gacha Role Playing | <3 #7 CHATGPT</a>',
+            '<a href="#episode8">The Mysteriousness of Eels | <3 #8 CHATGPT</a>',
+            '<a href="#episode9">ChatGPT\'s 101 Course on NFT\'s | <3 #9 CHATGPT</a>',
+            '<a href="#episode10">The Unique Differences Between Butterflies & Moths | <3 #10 GEMINI</a>',
+            '<a href="#episode11">WTF is Quantum Computing | <3 #11 GEMINI</a>',
+            '<a href="#episode12">Google Gemini\'s 5 Principles | <3 #12 GEMINI</a>',
+            '<a href="#episode13">Deepfakes | <3 #13 GEMINI</a>',
+            '<a href="#episode14">The Nutshell Studies of Unexplained Death | <3 #14 GEMINI</a>'
         ];
         
         let numbers = [0, 0, 0];
@@ -122,7 +131,7 @@
             });
             
             const episodeNum = numbers[0] * 100 + numbers[1] * 10 + numbers[2];
-            document.getElementById('episode').textContent = episodes[episodeNum] || "Episode not available";
+            document.getElementById('episode').innerHTML = episodes[episodeNum] || "Episode not available";
         }
         
         update();
