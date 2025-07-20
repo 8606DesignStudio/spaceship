@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Dial</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             height: 100vh;
@@ -20,143 +15,63 @@
             background: #000050;
             color: white;
             flex-direction: column;
+            gap: 30px;
         }
-
-        .episode-display {
-            margin-bottom: 30px;
-            text-align: center;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .episode-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #ffd700;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            line-height: 1.4;
-        }
-
-        .episode-not-found {
-            font-size: 1rem;
-            color: #888;
-            font-style: italic;
-        }
-
-        .dial-container {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
-        }
-
+        .episode { font-size: 1.2rem; color: #ffd700; text-align: center; min-height: 30px; }
+        .dials { display: flex; gap: 10px; }
         .dial {
-            width: 25px;
-            height: 50px;
-            border-radius: 0px;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
             background: linear-gradient(135deg, #ffd700, #ffb347);
             border: 4px solid #b8860b;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            user-select: none;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-        }
-
-        .dial:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
-            border-color: #daa520;
-        }
-
-        .number {
+            transition: transform 0.2s;
             font-size: 2rem;
             font-weight: bold;
             color: #8b4513;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-
+        .dial:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
-    <div class="episode-display">
-        <div class="episode-title" id="episodeDisplay">Episode 000: Welcome to the Show</div>
-    </div>
-    
-    <div class="dial-container">
-        <div class="dial" onclick="nextNumber(0)">
-            <div class="number" id="currentNumber0">0</div>
-        </div>
-        <div class="dial" onclick="nextNumber(1)">
-            <div class="number" id="currentNumber1">0</div>
-        </div>
-        <div class="dial" onclick="nextNumber(2)">
-            <div class="number" id="currentNumber2">0</div>
-        </div>
-    </div>
-    
+    <div class="episode" id="episode">Episode 000: Welcome to the Show</div>
+    <div class="dials" id="dials"></div>
 
     <script>
-        let numbers = [0, 0, 0];
-        
-        // Array of podcast episodes - index matches the dial number
-        const podcastEpisodes = [
+        const episodes = [
             "Episode 000: Welcome to the Show",
             "Episode 001: Getting Started with JavaScript", 
             "Episode 002: Understanding CSS Basics",
             "Episode 003: HTML Fundamentals",
             "Episode 004: Building Your First Website",
-            "Episode 005: Introduction to React",
-            "Episode 006: Node.js Essentials",
-            "Episode 007: Database Design Principles",
-            "Episode 008: API Development",
-            "Episode 009: Testing Your Code",
-            "Episode 010: Deployment Strategies",
-            // Add more episodes as needed...
-            "Episode 999: The Final Episode"
+            "Episode 005: Introduction to React"
         ];
         
-        function getCombinedNumber() {
-            return numbers[0] * 100 + numbers[1] * 10 + numbers[2];
+        let numbers = [0, 0, 0];
+        
+        // Create dials dynamically
+        document.getElementById('dials').innerHTML = numbers.map((n, i) => 
+            `<div class="dial" onclick="spin(${i})">${n}</div>`
+        ).join('');
+        
+        function spin(i) {
+            numbers[i] = (numbers[i] + 1) % 10;
+            update();
         }
         
-        function getCurrentEpisode() {
-            const episodeNumber = getCombinedNumber();
-            return podcastEpisodes[episodeNumber] || "Episode not found";
-        }
-        
-        function nextNumber(dialIndex) {
-            numbers[dialIndex] = (numbers[dialIndex] + 1) % 10;
-            document.getElementById('currentNumber' + dialIndex).textContent = numbers[dialIndex];
+        function update() {
+            const dialElements = document.querySelectorAll('.dial');
+            numbers.forEach((n, i) => dialElements[i].textContent = n);
             
-            // Update the episode display
-            updateEpisodeDisplay();
-            
-            // Log both the number and the episode
-            console.log('Episode Number:', getCombinedNumber());
-            console.log('Episode Title:', getCurrentEpisode());
+            const episodeNum = numbers[0] * 100 + numbers[1] * 10 + numbers[2];
+            document.getElementById('episode').textContent = episodes[episodeNum] || "Episode not available";
         }
         
-        function updateEpisodeDisplay() {
-            const episodeDisplay = document.getElementById('episodeDisplay');
-            const currentEpisode = getCurrentEpisode();
-            
-            if (currentEpisode === "Episode not found") {
-                episodeDisplay.textContent = "Episode not available";
-                episodeDisplay.className = "episode-not-found";
-            } else {
-                episodeDisplay.textContent = currentEpisode;
-                episodeDisplay.className = "episode-title";
-            }
-        }
-        
-        // Initialize the display on page load
-        updateEpisodeDisplay();
+        update();
     </script>
 </body>
 </html>
