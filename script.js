@@ -132,11 +132,6 @@ const episodes = [
     '<a href="https://share.transistor.fm/s/2e23a198">Gemini Helps Out Copilot, As We Tackle Virtual Private Servers | <3 #140 COPILOT, GEMINI</a>',
     '<a href="https://share.transistor.fm/s/5ac8dd3d">We Design a Digital Space(ship) that Defies the Laws of Physics | <3 #141 CHATGPT</a>',
     '<a href="https://share.transistor.fm/s/cb0e37a4">How to Disable a Nuclear Plant with a Flash Drive | <3 #142 GEMINI</a>',
-    "", // Episode 143 not in export data
-    "", // Episode 144 not in export data
-    "", // Episode 145 not in export data
-    "", // Episode 146 not in export data
-    ""  // Episode 147 not in export data
 ];
 
 // ========== DIAL LOGIC ========== 
