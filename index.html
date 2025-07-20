@@ -64,9 +64,51 @@
             update();
         }
         
+        function spinDown(i) {
+            numbers[i] = (numbers[i] - 1 + 10) % 10;
+            update();
+        }
+        
+        // Touch gesture handling
+        let touchStartY = 0;
+        let currentDial = -1;
+        
+        function handleTouchStart(e, dialIndex) {
+            touchStartY = e.touches[0].clientY;
+            currentDial = dialIndex;
+            e.preventDefault();
+        }
+        
+        function handleTouchEnd(e) {
+            if (currentDial === -1) return;
+            
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaY = touchStartY - touchEndY;
+            const threshold = 30; // Minimum distance for a flick
+            
+            if (Math.abs(deltaY) > threshold) {
+                if (deltaY > 0) {
+                    // Flicked up - increase number
+                    spin(currentDial);
+                } else {
+                    // Flicked down - decrease number
+                    spinDown(currentDial);
+                }
+            } else {
+                // Small movement or tap - just increase (original behavior)
+                spin(currentDial);
+            }
+            
+            currentDial = -1;
+            e.preventDefault();
+        }
+        
         function update() {
             const dialElements = document.querySelectorAll('.dial');
-            numbers.forEach((n, i) => dialElements[i].textContent = n);
+                `<div class="dial" 
+                      onclick="spin(${i})"
+                      ontouchstart="handleTouchStart(event, ${i})"
+                      ontouchend="handleTouchEnd(event)">${n}</div>`
             
             const episodeNum = numbers[0] * 100 + numbers[1] * 10 + numbers[2];
             document.getElementById('episode').textContent = episodes[episodeNum] || "Episode not available";
