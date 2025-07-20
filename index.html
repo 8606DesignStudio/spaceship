@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- ========== HTML SECTION STARTS HERE ========== -->
+<!-- HTML defines the STRUCTURE and CONTENT of the webpage -->
 <head>
     <!-- Basic HTML document setup -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Dial</title>
+    
+    <!-- ========== CSS SECTION STARTS HERE ========== -->
+    <!-- CSS defines the APPEARANCE and LAYOUT (colors, fonts, positioning) -->
     <style>
         /* Reset default browser styles and set up box-sizing */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -62,6 +67,7 @@
         /* Dial hover effect - slightly larger */
         .dial:hover { transform: scale(1.05); }
     </style>
+    <!-- ========== CSS SECTION ENDS HERE ========== -->
 </head>
 <body>
     <!-- Episode display area - shows current episode title/link -->
@@ -70,6 +76,8 @@
     <!-- Container for the three number dials -->
     <div class="dials" id="dials"></div>
 
+    <!-- ========== JAVASCRIPT SECTION STARTS HERE ========== -->
+    <!-- JavaScript defines the BEHAVIOR and INTERACTIVITY (what happens when you click) -->
     <script>
         // Array containing all episode titles and links
         // Index 0 = Episode 000, Index 1 = Episode 001, etc.
@@ -265,5 +273,7 @@
         // Initialize the display
         update();
     </script>
+    <!-- ========== JAVASCRIPT SECTION ENDS HERE ========== -->
 </body>
+<!-- ========== HTML SECTION ENDS HERE ========== -->
 </html>
