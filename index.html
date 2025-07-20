@@ -76,16 +76,39 @@
     <script>
         let numbers = [0, 0, 0];
         
+        // Array of podcast episodes - index matches the dial number
+        const podcastEpisodes = [
+            "Episode 000: Welcome to the Show",
+            "Episode 001: Getting Started with JavaScript", 
+            "Episode 002: Understanding CSS Basics",
+            "Episode 003: HTML Fundamentals",
+            "Episode 004: Building Your First Website",
+            "Episode 005: Introduction to React",
+            "Episode 006: Node.js Essentials",
+            "Episode 007: Database Design Principles",
+            "Episode 008: API Development",
+            "Episode 009: Testing Your Code",
+            "Episode 010: Deployment Strategies",
+            // Add more episodes as needed...
+            "Episode 999: The Final Episode"
+        ];
+        
         function getCombinedNumber() {
             return numbers[0] * 100 + numbers[1] * 10 + numbers[2];
+        }
+        
+        function getCurrentEpisode() {
+            const episodeNumber = getCombinedNumber();
+            return podcastEpisodes[episodeNumber] || "Episode not found";
         }
         
         function nextNumber(dialIndex) {
             numbers[dialIndex] = (numbers[dialIndex] + 1) % 10;
             document.getElementById('currentNumber' + dialIndex).textContent = numbers[dialIndex];
             
-            // Optional: log the combined number whenever a dial changes
-            console.log('Combined number:', getCombinedNumber());
+            // Log both the number and the episode
+            console.log('Episode Number:', getCombinedNumber());
+            console.log('Episode Title:', getCurrentEpisode());
         }
     </script>
 </body>
