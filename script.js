@@ -209,7 +209,7 @@ function update() {
     const episodeNum = numbers[0] * 100 + numbers[1] * 10 + numbers[2];
     
     // Display the episode title/link or "not available" message
-    document.getElementById('episode').innerHTML = episodes[episodeNum] || "Episode not available";
+    document.getElementById('episode').innerHTML = episodes[episodeNum] || "";
 }
 
 // Initialize the display
