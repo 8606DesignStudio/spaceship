@@ -15,7 +15,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #000050; /* Dark blue background */
+    background: #000050 url('cockpit.jpg') center/cover no-repeat; /* Cockpit background with dark blue fallback */
     color: white;
     flex-direction: column; /* Stack items vertically */
     gap: 30px;
