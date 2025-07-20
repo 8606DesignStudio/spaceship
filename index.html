@@ -45,96 +45,13 @@
             color: #8b4513;
         }
         .dial:hover { transform: scale(1.05); }
-        .link-editor {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 80, 0.9);
-            border: 2px solid #ffd700;
-            border-radius: 10px;
-            padding: 20px;
-            max-width: 400px;
-            max-height: 80vh;
-            overflow-y: auto;
-            display: none;
-        }
-        .link-editor h3 {
-            color: #ffd700;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .episode-input {
-            margin-bottom: 10px;
-        }
-        .episode-input label {
-            display: block;
-            color: #ffd700;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
-        .episode-input input {
-            width: 100%;
-            padding: 5px;
-            border: 1px solid #ffd700;
-            border-radius: 3px;
-            background: #000030;
-            color: white;
-            font-size: 0.8rem;
-        }
-        .editor-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .editor-buttons button {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ffd700;
-            border-radius: 5px;
-            background: #ffd700;
-            color: #000050;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .editor-buttons button:hover {
-            background: #ffb347;
-        }
-        .edit-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 15px;
-            background: #ffd700;
-            color: #000050;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .edit-button:hover {
-            background: #ffb347;
-        }
     </style>
 </head>
 <body>
-    <button class="edit-button" onclick="toggleEditor()">Edit Links</button>
-    
-    <div class="link-editor" id="linkEditor">
-        <h3>Edit Episode Links</h3>
-        <div id="linkInputs"></div>
-        <div class="editor-buttons">
-            <button onclick="saveLinks()">Save</button>
-            <button onclick="toggleEditor()">Cancel</button>
-        </div>
-    </div>
-    
     <div class="episode" id="episode">Episode 000: Welcome to the Show</div>
     <div class="dials" id="dials"></div>
 
     <script>
-        // Episode links storage
-        let episodeLinks = {};
-        
         const episodes = [
             "Episode 000: Welcome to the Show",
             '<a href="#episode1">Colors, Berg Lake & Creativity | <3 #1 CHATGPT</a>',
@@ -152,57 +69,6 @@
             '<a href="#episode13">Deepfakes | <3 #13 GEMINI</a>',
             '<a href="#episode14">The Nutshell Studies of Unexplained Death | <3 #14 GEMINI</a>'
         ];
-        
-        function toggleEditor() {
-            const editor = document.getElementById('linkEditor');
-            const isVisible = editor.style.display === 'block';
-            
-            if (!isVisible) {
-                // Show editor and populate inputs
-                populateLinkInputs();
-                editor.style.display = 'block';
-            } else {
-                // Hide editor
-                editor.style.display = 'none';
-            }
-        }
-        
-        function populateLinkInputs() {
-            const container = document.getElementById('linkInputs');
-            container.innerHTML = '';
-            
-            // Only show episodes 1-14 (skip episode 0)
-            for (let i = 1; i < episodes.length; i++) {
-                const div = document.createElement('div');
-                div.className = 'episode-input';
-                div.innerHTML = `
-                    <label>Episode ${i.toString().padStart(3, '0')}</label>
-                    <input type="url" 
-                           id="link${i}" 
-                           value="${episodeLinks[i] || ''}" 
-                           placeholder="https://example.com/episode${i}">
-                `;
-                container.appendChild(div);
-            }
-        }
-        
-        function saveLinks() {
-            // Save all the links
-            for (let i = 1; i < episodes.length; i++) {
-                const input = document.getElementById(`link${i}`);
-                if (input && input.value.trim()) {
-                    episodeLinks[i] = input.value.trim();
-                } else {
-                    delete episodeLinks[i];
-                }
-            }
-            
-            // Update the current display
-            update();
-            
-            // Hide editor
-            toggleEditor();
-        }
         
         let numbers = [0, 0, 0];
         
@@ -265,22 +131,7 @@
             });
             
             const episodeNum = numbers[0] * 100 + numbers[1] * 10 + numbers[2];
-            const episode = episodes[episodeNum];
-            
-            if (episode) {
-                if (episodeNum === 0) {
-                    // Episode 0 - no link
-                    document.getElementById('episode').innerHTML = episode;
-                } else if (episodeLinks[episodeNum]) {
-                    // Episode has a custom link
-                    document.getElementById('episode').innerHTML = `<a href="${episodeLinks[episodeNum]}" target="_blank">${episode}</a>`;
-                } else {
-                    // Episode exists but no link set
-                    document.getElementById('episode').innerHTML = episode;
-                }
-            } else {
-                document.getElementById('episode').innerHTML = "Episode not available";
-            }
+            document.getElementById('episode').innerHTML = episodes[episodeNum] || "Episode not available";
         }
         
         update();
